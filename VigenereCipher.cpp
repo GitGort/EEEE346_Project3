@@ -3,7 +3,7 @@
 /*
  * definition of the constructor
  */
-/*TODO: write your code*/
+VigenereCipher::VigenereCipher(string k) : 
 
 /*
  * definition of encode()
