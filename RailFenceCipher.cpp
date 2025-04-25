@@ -3,7 +3,7 @@
 /*
  * definition of the constructor
  */
-/*TODO: write your code*/
+RailFenceCipher::RailFenceCipher(int r) : rail(r), Cipher("RailFence") {;}
 
 /*
  * definition of encode()
