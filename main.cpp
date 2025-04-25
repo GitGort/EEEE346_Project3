@@ -44,7 +44,7 @@ int main() {
 
     // generate an object from VigenereCipher and have the object pointer point to this object
     // key is used in the constructor
-    /*TODO: write your code*/
+    cipher = shared_ptr<Cipher>(new VigenereCipher(key));
   } else if (cipherName == "RailFence") {
     // for a Rail Fence cipher, a rail value is needed
     int rail;
@@ -54,12 +54,11 @@ int main() {
 
     // generate an object from RailFenceCipher and have the object pointer point to this object
     // rail is used in the constructor
-    /*TODO: write your code*/
+    cipher = shared_ptr<Cipher>(new RailFenceCipher(rail));
   } else {
     cout << "Bad cipher name ( " << cipherName << " )" << endl;
     return -1;
   }
-
   // request action (ENCODE or DECODE)
   cin >> action;
 
