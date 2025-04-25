@@ -30,21 +30,21 @@ public:
    * constructor: sets cipherName but may only be called by derived classes
    * @param name - used to set cipherName
    */
-  /*TODO: write your code*/
+  Cipher(string c) : cipherName(c) {;}
 
   /*  
    * encode(): pure virtual function for encoding
    * @param msg - string-typed original message that requires encoding
    * @return true if encoding was successful
    */
-  /*TODO: write your code*/
+  virtual bool encode(string msg) = 0;
 
   /*
    * decode(): pure virtual function for decoding
    * @param msg - string-typed encoded message that requires decoding
    * @return true if decoding was successful
    */
-  /*TODO: write your code*/
+  virtual bool decode(string msg) = 0;
 
   /*
    * isValidCharacter(): checks if a character is valid for a cipher
@@ -52,7 +52,11 @@ public:
    * @param c - character to check
    * @return - true if the character is A-Z or space; otherwise false
    */
-  /*TODO: write your code*/
+  bool isValidCharacter(char c)
+  {
+    if (c > 64 && c < 91 || c == 32) {return true;}
+    return false;
+  }
 
   /*
    * getters
