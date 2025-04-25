@@ -19,7 +19,7 @@ int main() {
   bool actionStatus;
 
   // declare a Cipher-typed shared pointer that will point to an object of AffineCipher, VigenereCipher, or RailFenceCipher
-  /*TODO: write your code*/
+  shared_ptr<Cipher> cipher;
 
   // request name for the cipher to use
   cin >> cipherName;
@@ -34,7 +34,7 @@ int main() {
 
     // generate an object from AffineCipher and have the object pointer point to this object
     // slope and intercept are used in the constructor
-    /*TODO: write your code*/
+    cipher = shared_ptr<Cipher>(new AffineCipher(slope, intercept));
   } else if (cipherName == "Vigenere") {
     // for a Vigenere cipher, a key value is needed
     string key;
@@ -84,3 +84,4 @@ int main() {
 
   return 0;
 }
+
