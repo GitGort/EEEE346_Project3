@@ -31,31 +31,26 @@ bool RailFenceCipher::encode(string msg) {
       //move to the next rail
       position += direction;
       //if at the last/first rail, change direction
-      if (position == (rail - 1) || position == 0) {direction *= -1;}
+      if ((position == (rail - 1)) || (position == 0)) {direction = -direction;}
     }
     //else throw error
-    //else {return false;}
+    else {return false;}
   }
   int transfered = 0; //loop structure iterable
-  do 
+  for (int i = 0; i < rail; i++)
   {
-    for (int i = 0; i < rail; i++)
+    for (int j = 0; j < msg.size(); j++)
     {
-      for (int j = 0; j < msg.size(); j++)
+      //this time isValidCharacter is used to check whether 
+      //stored character is useful data or asterisk
+      if (isValidCharacter(characters[i][j]))
       {
-        //this time isValidCharacter is used to check whether 
-        //stored character is useful data or asterisk
-        if (isValidCharacter(msg.at(transfered) == true))
-        {
-          encoded.insert(transfered, 1, characters[i][j]);
-          //increase iterable when useful data is found
-          transfered++;
-        }
-        else {continue;}
+        encoded.insert(transfered, 1, characters[i][j]);
+        //increase iterable when useful data is found
+        transfered++;
       }
     }
-    //break when all data has been found
-  } while (transfered < msg.size());
+  } 
   //process complete!
   return true;
 }
