@@ -59,5 +59,67 @@ bool RailFenceCipher::encode(string msg) {
  * definition of decode()
  */
 bool RailFenceCipher::decode(string msg) {
-  /*TODO: write your code*/
+  char characters[rail][msg.size()] = {0};
+  //use double loop to initialize array
+  for (int i = 0; i < rail; i++)
+  {
+    for (int j = 0; j < msg.size(); j++)
+    {
+      //set all characters to "*" to read out message later (will skip over when encoding)
+      characters[i][j] = '*';
+    }
+  }
+  int direction = 1, position = 0; //control variables to hop rails
+  //for every character in the message
+  for (int i = 0; i < msg.size(); i++)
+  {    
+    //place a special character to mask the array
+    characters[position][i] = '%';
+    //move to the next rail
+    position += direction;
+    //if at the last/first rail, change direction
+    if ((position == (rail - 1)) || (position == 0)) {direction = -direction;}   
+  }
+  /*
+  array should look something like this now:
+    %***%***%
+    *%*%*%*%*
+    **%***%**
+  now the characters from "msg" go into the masked slots
+  */
+ int msgIndex = 0;
+ //read right to left then top to bottom
+ for (int i = 0; i < rail; i++)
+ {
+   for (int j = 0; j < msg.size(); j++)
+   {
+    //if the position in the array is marked
+     if (characters[i][j] == '%')
+     {
+      //and the next char in the msg string is valid
+        if (isValidCharacter(msg.at(msgIndex)))
+        {
+          //place the char from msg into the array
+          characters[i][j] = msg.at(msgIndex);
+          msgIndex++;
+        }
+        else {return false;}
+     }
+   }
+ }
+ //now we can read the characters in the correct order by using the zig-zag code again
+ //remember to reset control variables
+ position = 0; direction = 1;
+ for (int i = 0; i < msg.size(); i++)
+  {    
+    //place a special character to mask the array
+    decoded.insert(i, 1, characters[position][i]);
+    //move to the next rail
+    position += direction;
+    //if at the last/first rail, change direction
+    if ((position == (rail - 1)) || (position == 0)) {direction = -direction;}   
+  }
+  //message recovery complete!
+  return true;
 }
+
