@@ -41,6 +41,19 @@ bool VigenereCipher::encode(string msg) {
   //for the length of the msg string
   //encoded.insert(i, 1, (encode formula output))
   //remember to check for invalid characters!!!
+  for (int i = 0; i < msg.size(); i++)
+  {
+    if (isValidCharacter(msg.at(i)))
+    {
+      if (msg.at(i) == ' ') //if space in message
+      {
+        encoded.insert(i, 1, ' '); //insert space in encoded
+        continue; //next cycle
+      }
+      encoded.insert(i, 1, (((msg.at(i) - 65) + (longkey.at(i) - 65)) % 26 + 65));
+    }
+    else {return false;} //throw error if msg character is invalid
+  }
 
   //encode successful!
   return true;
@@ -72,8 +85,31 @@ bool VigenereCipher::decode(string msg) {
     }
     else {return false;} //throw error if key character is invalid
   }
-  
+
   //for the length of the msg string
-  //encoded.insert(i, 1, (decode formula output))
+  //decoded.insert(i, 1, (decode formula output))
   //remember to check for invalid characters!!!
+
+  for (int i = 0; i < msg.size(); i++)
+  {
+    if (isValidCharacter(msg.at(i)))
+    {
+      if (msg.at(i) == ' ') //if space in message
+      {
+        decoded.insert(i, 1, ' '); //insert space in encoded
+        continue; //next cycle
+      }
+      //exception handling for negative values
+      if (msg.at(i) < longkey.at(i))
+      {
+        decoded.insert(i, 1, (((msg.at(i) - 65) - (longkey.at(i) - 65) + 26) % 26 + 65));
+        continue; //next cycle
+      }
+      decoded.insert(i, 1, (((msg.at(i) - 65) - (longkey.at(i) - 65)) % 26 + 65));
+    }
+    else {return false;} //throw error if msg character is invalid
+  }
+
+  //decoding complete!
+  return true;
 }
